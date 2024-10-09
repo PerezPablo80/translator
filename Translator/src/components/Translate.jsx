@@ -17,8 +17,14 @@ function Translate({ text, to }) {
 					});
 			} else {
 				Promise.all(translate(text, { to: to, client: "gtx" })).then((values) => {
-					console.log("values.join:", values.text.join(""));
-					setTranslation(values.text.join(""));
+					let txt = "";
+					values.forEach((v) => {
+						txt += v.text;
+					});
+					console.log("txt::", txt);
+					setTranslation(txt);
+					// console.log("values.join:", values.text.join(""));
+					// setTranslation(values.text.join(""));
 				});
 				// const res = await translate(text, { to: to, client: "gtx" });
 				// console.log("::res::", res);

@@ -1,8 +1,8 @@
 import "./App.css";
 
 function App() {
-	return <Idea1 />;
+	return <Idea3 />;
 }
 import "bootstrap/dist/css/bootstrap.min.css";
-import Idea1 from "./components/Idea1";
+import Idea3 from "./components/Idea3";
 export default App;
