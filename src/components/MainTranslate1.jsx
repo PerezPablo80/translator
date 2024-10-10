@@ -31,18 +31,40 @@ function MainTranslate1({ lang = "es" }) {
 						console.log("Exception promising all:", e);
 					});
 			} else {
-				fetch("https://libretranslate.de/translate", {
-					method: "POST",
-					headers: { "Content-Type": "application/json" },
-					body: JSON.stringify({
-						q: text,
-						source: "en",
-						target: "es",
-					}),
-				})
-					.then((response) => response.json())
-					.then((data) => console.log(data.translatedText))
-					.catch((error) => console.error(error));
+				// const url = `https://cors-anywhere.herokuapp.com/https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=es&dt=t&q=hello`;
+				// fetch(url)
+				// 	.then((response) => {
+				// 		console.log("RESPONSE:", response);
+				// 		response.json();
+				// 	})
+				// 	.then((data) => console.log("DATA en fetch::", data))
+				// 	.catch((error) => console.error("ERROR EN FETCH::", error));
+
+				fetch(`/api/translate?text=${text}&to=${to}&from=en`)
+					.then((response) => {
+						if (response) {
+							console.log("response:", response);
+							response.json();
+						} else {
+							console.log("no response:", response);
+						}
+					})
+					.then((data) => {
+						if (data) {
+							console.log("DATA:", data), setTranslation(data.text);
+						} else {
+							console.log("no data:", data);
+						}
+					})
+					.catch((e) => console.log("error on fetch:", e));
+				translate(text, { to: to })
+					.then((value) => {
+						console.log("txt::", value.text);
+						setTranslation(value.text);
+					})
+					.catch((e) => {
+						console.log("Error on single Translate:", e);
+					});
 			}
 		} catch (e) {
 			console.log("error::", e);
