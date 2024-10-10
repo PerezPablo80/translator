@@ -5,7 +5,6 @@ import Form from "react-bootstrap/Form";
 import Translator_selector from "./Translatator_selector";
 import { useState } from "react";
 import Button from "react-bootstrap/Button";
-import translate from "google-translate-api-x";
 
 function MainTranslate1({ lang = "es" }) {
 	const [lng, setLng] = useState("es");
@@ -32,14 +31,23 @@ function MainTranslate1({ lang = "es" }) {
 						console.log("Exception promising all:", e);
 					});
 			} else {
-				translate(text, { to: to })
-					.then((value) => {
-						console.log("txt::", value.text);
-						setTranslation(value.text);
+				fetch(`/api/translate?text=${text}&to=${to}`)
+					.then((response) => {
+						console.log("response:", response);
+						response.json();
 					})
-					.catch((e) => {
-						console.log("Error on single Translate:", e);
-					});
+					.then((data) => {
+						console.log("DATA:", data), setTranslation(data.text);
+					})
+					.catch((e) => console.log("error on fetch:", e));
+				// translate(text, { to: to })
+				// 	.then((value) => {
+				// 		console.log("txt::", value.text);
+				// 		setTranslation(value.text);
+				// 	})
+				// 	.catch((e) => {
+				// 		console.log("Error on single Translate:", e);
+				// 	});
 			}
 		} catch (e) {
 			console.log("error::", e);
