@@ -10,7 +10,6 @@ import Translate from "./Translate";
 function MainTranslate1({ lang = "es" }) {
 	const [lng, setLng] = useState("es");
 	const [text, setText] = useState(false);
-	console.log("MainTranslate1 lang:", lang);
 	function procesarTraductor() {
 		let d = document.getElementById("textAreaSource").value;
 		setText(d);
@@ -21,7 +20,7 @@ function MainTranslate1({ lang = "es" }) {
 			: import.meta.env.VITE_MAIN_TRANSLATE_PLACEHOLDER_BTN_EN;
 	let btn_text =
 		lang == "es" ? import.meta.env.VITE_MAIN_TRANSLATE_BTN_ES : import.meta.env.VITE_MAIN_TRANSLATE_BTN_EN;
-	console.log("placeholder:", placeholder);
+
 	return (
 		<Container fluid>
 			<Row>

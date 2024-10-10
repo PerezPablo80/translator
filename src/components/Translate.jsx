@@ -1,8 +1,10 @@
 import translate from "google-translate-api-x";
 import { useEffect, useState } from "react";
-function Translate({ text, to }) {
+async function Translate({ text, to }) {
 	const [translation, setTranslation] = useState(false);
 	async function traducir(text, to) {
+		console.log("will go to translate with:");
+		console.log(`Text::${text}:: and to::${to}::`);
 		try {
 			if (text.length > 5000) {
 				const chunks = [];
@@ -16,7 +18,7 @@ function Translate({ text, to }) {
 						console.log("Exception promising all:", e);
 					});
 			} else {
-				Promise.all(translate(text, { to: to, client: "gtx" })).then((values) => {
+				Promise.all(translate(text, { to: to })).then((values) => {
 					let txt = "";
 					values.forEach((v) => {
 						txt += v.text;
