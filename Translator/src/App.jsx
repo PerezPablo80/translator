@@ -1,10 +1,13 @@
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Nav from "react-bootstrap/Nav";
+import ToggleButtonGroup from "react-bootstrap/ToggleButtonGroup";
+import ToggleButton from "react-bootstrap/ToggleButton";
 function App() {
 	const [lang, setLang] = useState("es");
 	const [active, setActive] = useState(false);
 	const actual = useRef();
+	const [update, setUpdate] = useState(true);
 	function handleSelection(sel_type) {
 		if (actual.current == sel_type) {
 			actual.current = false;
@@ -13,19 +16,45 @@ function App() {
 			actual.current = sel_type;
 			switch (sel_type) {
 				case "pdf":
-					setActive(<PDFToText />);
+					setActive(<PDFToText lang={lang} />);
 					break;
 				case "ocr_image":
-					setActive(<ImageToText />);
+					setActive(<ImageToText lang={lang} />);
 					break;
 				case "translate_text":
-					setActive(<MainTranslate1 />);
+					setActive(<MainTranslate1 lang={lang} />);
 					break;
 			}
 		}
 	}
-	// https://react-bootstrap.netlify.app/docs/components/buttons/ <<- radio toggleButton
-	//usar esto para seleccionar español o ingles
+	function updateLanguage(text) {
+		setLang(text);
+		setTimeout(() => {
+			setUpdate(false);
+		}, 10);
+		setTimeout(() => {
+			setUpdate(true);
+		}, 10);
+	}
+	function getLang() {
+		return (
+			<ToggleButtonGroup
+				type="radio"
+				name="langOptions"
+				defaultValue={"es"}
+				onChange={(val) => {
+					updateLanguage(val);
+				}}
+			>
+				<ToggleButton id="tbg-radio-1" value={"es"} className="btn btn-secondary">
+					Español
+				</ToggleButton>
+				<ToggleButton id="tbg-radio-2" value={"en"} className="btn btn-secondary">
+					English
+				</ToggleButton>
+			</ToggleButtonGroup>
+		);
+	}
 	function getMenu() {
 		let pdf = lang == "es" ? import.meta.env.VITE_NAV_PDF_TO_TEXT_ES : import.meta.env.VITE_NAV_PDF_TO_TEXT_EN;
 		let ocr = lang.includes("es")
@@ -59,7 +88,8 @@ function App() {
 	}
 	return (
 		<Container fluid className="main-container">
-			{getMenu()}
+			{getLang()}
+			{update && getMenu()}
 			<br />
 			{active}
 		</Container>

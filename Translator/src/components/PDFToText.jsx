@@ -5,7 +5,7 @@ import Form from "react-bootstrap/Form";
 import { useState, useRef } from "react";
 import Button from "react-bootstrap/Button";
 import pdfToText from "react-pdftotext";
-function PDFToText() {
+function PDFToText({ lang = "es" }) {
 	const [imagePath, setImagePath] = useState("");
 	const [text, setText] = useState("");
 
@@ -25,7 +25,11 @@ function PDFToText() {
 		<Container fluid>
 			<Row>
 				<Col lg={{ span: 6, offset: 4 }}>
-					<p>Select PDF for text extraction</p>
+					<p>
+						{lang == "es"
+							? import.meta.env.VITE_PDF_TO_TEXT_LABEL_ES
+							: import.meta.env.VITE_PDF_TO_TEXT_LABEL_EN}
+					</p>
 					<input type="file" className="btn btn-success" onChange={handleChange} accept="application/pdf" />
 				</Col>
 			</Row>
@@ -33,7 +37,11 @@ function PDFToText() {
 				<Col>
 					{text && (
 						<>
-							<h3>Extracted text</h3>
+							<h3>
+								{lang == "es"
+									? import.meta.env.VITE_EXTRACTED_TEXT_LABEL_ES
+									: import.meta.env.VITE_EXTRACTED_TEXT_LABEL_EN}
+							</h3>
 							<div className="text-box">{text}</div>
 						</>
 					)}

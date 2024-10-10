@@ -38,6 +38,6 @@ function Translate({ text, to }) {
 		traducir(text, to);
 	}, []);
 
-	return translation ? <div>{translation.text}</div> : <p>Procesando</p>;
+	return translation ? <div>{translation}</div> : <p>Procesando</p>;
 }
 export default Translate;

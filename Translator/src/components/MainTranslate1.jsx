@@ -7,13 +7,21 @@ import Translator_selector from "./Translatator_selector";
 import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Translate from "./Translate";
-function MainTranslate1() {
-	const [lang, setLang] = useState("es");
+function MainTranslate1({ lang = "es" }) {
+	const [lng, setLng] = useState("es");
 	const [text, setText] = useState(false);
+	console.log("MainTranslate1 lang:", lang);
 	function procesarTraductor() {
 		let d = document.getElementById("textAreaSource").value;
 		setText(d);
 	}
+	let placeholder =
+		lang == "es"
+			? import.meta.env.VITE_MAIN_TRANSLATE_PLACEHOLDER_BTN_ES
+			: import.meta.env.VITE_MAIN_TRANSLATE_PLACEHOLDER_BTN_EN;
+	let btn_text =
+		lang == "es" ? import.meta.env.VITE_MAIN_TRANSLATE_BTN_ES : import.meta.env.VITE_MAIN_TRANSLATE_BTN_EN;
+	console.log("placeholder:", placeholder);
 	return (
 		<Container fluid>
 			<Row>
@@ -22,12 +30,12 @@ function MainTranslate1() {
 						id="textAreaSource"
 						name="textAreaSource"
 						as="textarea"
-						placeholder="Leave a comment here"
+						placeholder={placeholder}
 						rows={8}
 					/>
 				</Col>
 				<Col>
-					<Translator_selector setLang={setLang} />
+					<Translator_selector setlang={setLng} lang={lang} />
 				</Col>
 				<Col>
 					<Button
@@ -36,11 +44,11 @@ function MainTranslate1() {
 							procesarTraductor();
 						}}
 					>
-						Procesar
+						{btn_text}
 					</Button>
 				</Col>
 				<Col>
-					{text && <Translate text={text} to={lang} />}
+					{text && <Translate text={text} to={lng} />}
 					{/* <Form.Control
 						id="textAreaDestination"
 						name="textAreaDestination"
