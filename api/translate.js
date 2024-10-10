@@ -1,6 +1,7 @@
 import googleTranslate from "google-translate-api-x";
 
 export default async function handler(req, res) {
+	console.log("access to function handler");
 	try {
 		const { text, to } = req.query; // receive text and language as query params
 		console.log(`on translate.js: text:${text} and to:${to}`);

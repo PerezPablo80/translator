@@ -33,11 +33,19 @@ function MainTranslate1({ lang = "es" }) {
 			} else {
 				fetch(`/api/translate?text=${text}&to=${to}`)
 					.then((response) => {
-						console.log("response:", response);
-						response.json();
+						if (response) {
+							console.log("response:", response);
+							response.json();
+						} else {
+							console.log("no response:", response);
+						}
 					})
 					.then((data) => {
-						console.log("DATA:", data), setTranslation(data.text);
+						if (data) {
+							console.log("DATA:", data), setTranslation(data.text);
+						} else {
+							console.log("no data:", data);
+						}
 					})
 					.catch((e) => console.log("error on fetch:", e));
 				// translate(text, { to: to })
