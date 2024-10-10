@@ -1,18 +1,49 @@
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Form from "react-bootstrap/Form";
 import Translator_selector from "./Translatator_selector";
 import { useState } from "react";
 import Button from "react-bootstrap/Button";
-import Translate from "./Translate";
+import translate from "google-translate-api-x";
+
 function MainTranslate1({ lang = "es" }) {
 	const [lng, setLng] = useState("es");
 	const [text, setText] = useState(false);
+	const [translation, setTranslation] = useState(false);
 	function procesarTraductor() {
 		let d = document.getElementById("textAreaSource").value;
 		setText(d);
+		traducir(d, lng);
+	}
+	async function traducir(text, to) {
+		console.log("will go to translate with:");
+		console.log(`Text::${text}:: and to::${to}::`);
+		try {
+			if (text.length > 5000) {
+				const chunks = [];
+				while (text.length) chunks.push(text.splice(0, 5000).join(""));
+				Promise.all(chunks.map((chunk) => translate(chunk, { to: to })))
+					.then((values) => {
+						console.log("values.join:", values.text.join(""));
+						setTranslation(values.text.join(""));
+					})
+					.catch((e) => {
+						console.log("Exception promising all:", e);
+					});
+			} else {
+				translate(text, { to: to })
+					.then((value) => {
+						console.log("txt::", value.text);
+						setTranslation(value.text);
+					})
+					.catch((e) => {
+						console.log("Error on single Translate:", e);
+					});
+			}
+		} catch (e) {
+			console.log("error::", e);
+		}
 	}
 	let placeholder =
 		lang == "es"
@@ -46,16 +77,7 @@ function MainTranslate1({ lang = "es" }) {
 						{btn_text}
 					</Button>
 				</Col>
-				<Col>
-					{text && <Translate text={text} to={lng} />}
-					{/* <Form.Control
-						id="textAreaDestination"
-						name="textAreaDestination"
-						as="textarea"
-						placeholder="Leave a comment here"
-						rows={4}
-					/> */}
-				</Col>
+				<Col>{translation && <div>{translation}</div>}</Col>
 			</Row>
 			<Row></Row>
 		</Container>
