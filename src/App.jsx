@@ -77,11 +77,11 @@ function App() {
 							{ocr}
 						</Nav.Link>
 					</Nav.Item>
-					<Nav.Item className="custom-nav-item">
+					{/* <Nav.Item className="custom-nav-item">
 						<Nav.Link className="nav-link" onClick={() => handleSelection("translate_text")}>
 							{translate}
 						</Nav.Link>
-					</Nav.Item>
+					</Nav.Item> */}
 				</Nav>
 			</Row>
 		);
@@ -103,29 +103,3 @@ import ImageToText from "./components/ImageToText";
 import MainTranslate1 from "./components/MainTranslate1";
 import Row from "react-bootstrap/esm/Row";
 export default App;
-
-/** 
- (<Nav variant="tabs">
-			<Nav.Item>
-				<Nav.Link onClick={() => handleSelection("pdf")}>
-					{lang.includes("es")
-						? import.meta.env.VITE_NAV_PDF_TO_TEXT_ES
-						: import.meta.env.VITE_NAV_PDF_TO_TEXT_EN}
-				</Nav.Link>
-			</Nav.Item>
-			<Nav.Item>
-				<Nav.Link onClick={() => handleSelection("ocr_image")}>
-					{lang.includes("es")
-						? import.meta.env.VITE_NAV_IMG_TO_TEXT_ES
-						: import.meta.env.VITE_NAV_IMG_TO_TEXT_EN}
-				</Nav.Link>
-			</Nav.Item>
-			<Nav.Item>
-				<Nav.Link onClick={() => handleSelection("translate_text")}>
-					{lang.includes("es")
-						? import.meta.env.VITE_NAV_TRANSLATE_TEXT_ES
-						: import.meta.env.VITE_NAV_TRANSLATE_TEXT_EN}
-				</Nav.Link>
-			</Nav.Item>
-		</Nav>)
-*/

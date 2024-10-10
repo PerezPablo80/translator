@@ -10,13 +10,12 @@ export default async function translate(req, res) {
 				q: text,
 				source: from,
 				target: to,
+				format: "text",
+				alternatives: 3,
+				api_key: "",
 			}),
 		});
 
-		// 	.then((response) => response.json())
-		// 	.then((data) => console.log(data.translatedText))
-		// 	.catch((error) => console.error(error));
-		// let resul = { result: json(result), resultado: "prueba de resultado" };
 		res.setHeader("Access-Control-Allow-Origin", "*"); // Allow CORS
 		res.status(200).json(result);
 	} catch (error) {
