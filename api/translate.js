@@ -3,13 +3,13 @@ import googleTranslate from "google-translate-api-x";
 export default async function translate(req, res) {
 	try {
 		const { text, to, from } = req.query; // receive text and language as query params
-		const result = await fetch("https://libretranslate.de/translate", {
+		const result = await fetch("https://libretranslate.com/translate", {
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify({
 				q: text,
-				source: "en",
-				target: "es",
+				source: from,
+				target: to,
 			}),
 		});
 

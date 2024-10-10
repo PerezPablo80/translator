@@ -57,14 +57,14 @@ function MainTranslate1({ lang = "es" }) {
 						}
 					})
 					.catch((e) => console.log("error on fetch:", e));
-				translate(text, { to: to })
-					.then((value) => {
-						console.log("txt::", value.text);
-						setTranslation(value.text);
-					})
-					.catch((e) => {
-						console.log("Error on single Translate:", e);
-					});
+				// translate(text, { to: to })
+				// 	.then((value) => {
+				// 		console.log("txt::", value.text);
+				// 		setTranslation(value.text);
+				// 	})
+				// 	.catch((e) => {
+				// 		console.log("Error on single Translate:", e);
+				// 	});
 			}
 		} catch (e) {
 			console.log("error::", e);
