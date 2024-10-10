@@ -77,11 +77,11 @@ function App() {
 							{ocr}
 						</Nav.Link>
 					</Nav.Item>
-					{/* <Nav.Item className="custom-nav-item">
+					<Nav.Item className="custom-nav-item">
 						<Nav.Link className="nav-link" onClick={() => handleSelection("translate_text")}>
 							{translate}
 						</Nav.Link>
-					</Nav.Item> */}
+					</Nav.Item>
 				</Nav>
 			</Row>
 		);

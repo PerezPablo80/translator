@@ -11,7 +11,7 @@ To execute it you need to:
 2. `npm run dev` -> to run the code.
 3. Access a web browser and access to `http://localhost:5173` or access the vercel hosting site i placed that is: `https://textextractorandtranslator.vercel.app/`
 
-Note: the translator will not work due to the fact you need an api key, if provided should work.
+Note: the translator os reactivated, but only for up to 5000 chars
 
 # React + Vite Proyecto para leer y extraer texto de PDF e imagenes y eventualmente traducir dicho texto.
 
@@ -25,4 +25,4 @@ Para ejecutarlo:
 2. `npm run dev` -> corre el código
 3. Para acceder debes entrar en un explorador de paginas web poniendo: `http://localhost:5173` o acceder donde quedó deployado, en Vercel a la siguiente url: `https://textextractorandtranslator.vercel.app/`
 
-Nota:Se desactiva el traductor debido a que hay un problema con la API Key, sin esta no funciona de forma correcta.
+Nota:Se reactiva el traductor pero solo para pocas palabras, de momento acotado a menos de 5000 caracteres

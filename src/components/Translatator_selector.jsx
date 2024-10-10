@@ -1,5 +1,5 @@
 import Form from "react-bootstrap/Form";
-function Translator_selector({ setLang, lang = "es" }) {
+function Translator_selector({ lang = "es", setLang }) {
 	let lngEs = (
 		<Form.Select
 			aria-label="select example"

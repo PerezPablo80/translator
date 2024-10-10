@@ -7,7 +7,7 @@ import { useState } from "react";
 import Button from "react-bootstrap/Button";
 
 function MainTranslate1({ lang = "es" }) {
-	const [lng, setLng] = useState("es");
+	const [lng, setLang] = useState("es");
 	const [text, setText] = useState(false);
 	const [translation, setTranslation] = useState(false);
 	function procesarTraductor() {
@@ -31,32 +31,35 @@ function MainTranslate1({ lang = "es" }) {
 						console.log("Exception promising all:", e);
 					});
 			} else {
-				// const url = `https://cors-anywhere.herokuapp.com/https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=es&dt=t&q=hello`;
-				// fetch(url)
-				// 	.then((response) => {
-				// 		console.log("RESPONSE:", response);
-				// 		response.json();
-				// 	})
-				// 	.then((data) => console.log("DATA en fetch::", data))
-				// 	.catch((error) => console.error("ERROR EN FETCH::", error));
+				fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${to}&dt=t&q=${text}`)
+					.then(async (response) => {
+						let j = await response.json();
+						console.log("j::", j);
+						console.log("j[0][0][0]::", j[0][0][0]);
+					})
+					.catch((e) => {
+						console.log("ERrroorrrr:", e);
+					});
 
-				fetch(`/api/translate?text=${text}&to=${to}&from=en`)
-					.then((response) => {
-						if (response) {
-							console.log("response:", response);
-							response.json();
-						} else {
-							console.log("no response:", response);
-						}
-					})
-					.then((data) => {
-						if (data) {
-							console.log("DATA:", data), setTranslation(data.text);
-						} else {
-							console.log("no data:", data);
-						}
-					})
-					.catch((e) => console.log("error on fetch:", e));
+				//1
+				// fetch(`/api/translate?text=${text}&to=${to}&from=en`)
+				// 	.then((response) => {
+				// 		if (response) {
+				// 			console.log("response:", response);
+				// 			response.json();
+				// 		} else {
+				// 			console.log("no response:", response);
+				// 		}
+				// 	})
+				// 	.then((data) => {
+				// 		if (data) {
+				// 			console.log("DATA:", data), setTranslation(data.text);
+				// 		} else {
+				// 			console.log("no data:", data);
+				// 		}
+				// 	})
+				// 	.catch((e) => console.log("error on fetch:", e));
+				// 	//2
 				// translate(text, { to: to })
 				// 	.then((value) => {
 				// 		console.log("txt::", value.text);
@@ -90,7 +93,7 @@ function MainTranslate1({ lang = "es" }) {
 					/>
 				</Col>
 				<Col>
-					<Translator_selector setlang={setLng} lang={lang} />
+					<Translator_selector setLang={setLang} lang={lang} />
 				</Col>
 				<Col>
 					<Button
