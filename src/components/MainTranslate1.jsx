@@ -31,23 +31,29 @@ function MainTranslate1({ lang = "es" }) {
 						console.log("Exception promising all:", e);
 					});
 			} else {
-				fetch(`/api/translate?text=${text}&to=${to}`)
-					.then((response) => {
-						if (response) {
-							console.log("response:", response);
-							response.json();
-						} else {
-							console.log("no response:", response);
-						}
-					})
-					.then((data) => {
-						if (data) {
-							console.log("DATA:", data), setTranslation(data.text);
-						} else {
-							console.log("no data:", data);
-						}
-					})
-					.catch((e) => console.log("error on fetch:", e));
+				const url = `https://cors-anywhere.herokuapp.com/https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=es&dt=t&q=hello`;
+				fetch(url)
+					.then((response) => response.json())
+					.then((data) => console.log("DATA en fetch::", data))
+					.catch((error) => console.error("ERROR EN FETCH::", error));
+
+				// fetch(`/api/translate?text=${text}&to=${to}`)
+				// 	.then((response) => {
+				// 		if (response) {
+				// 			console.log("response:", response);
+				// 			response.json();
+				// 		} else {
+				// 			console.log("no response:", response);
+				// 		}
+				// 	})
+				// 	.then((data) => {
+				// 		if (data) {
+				// 			console.log("DATA:", data), setTranslation(data.text);
+				// 		} else {
+				// 			console.log("no data:", data);
+				// 		}
+				// 	})
+				// 	.catch((e) => console.log("error on fetch:", e));
 				// translate(text, { to: to })
 				// 	.then((value) => {
 				// 		console.log("txt::", value.text);
