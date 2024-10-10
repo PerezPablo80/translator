@@ -7,7 +7,7 @@ import Translator_selector from "./Translatator_selector";
 import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Translate from "./Translate";
-function Idea1() {
+function MainTranslate1() {
 	const [lang, setLang] = useState("es");
 	const [text, setText] = useState(false);
 	function procesarTraductor() {
@@ -17,13 +17,13 @@ function Idea1() {
 	return (
 		<Container fluid>
 			<Row>
-				<Col>
+				<Col lg={{ span: 4, offset: 1 }}>
 					<Form.Control
 						id="textAreaSource"
 						name="textAreaSource"
 						as="textarea"
 						placeholder="Leave a comment here"
-						rows={4}
+						rows={8}
 					/>
 				</Col>
 				<Col>
@@ -54,4 +54,4 @@ function Idea1() {
 		</Container>
 	);
 }
-export default Idea1;
+export default MainTranslate1;

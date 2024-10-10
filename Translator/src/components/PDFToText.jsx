@@ -5,7 +5,7 @@ import Form from "react-bootstrap/Form";
 import { useState, useRef } from "react";
 import Button from "react-bootstrap/Button";
 import pdfToText from "react-pdftotext";
-function Idea3() {
+function PDFToText() {
 	const [imagePath, setImagePath] = useState("");
 	const [text, setText] = useState("");
 
@@ -24,20 +24,22 @@ function Idea3() {
 	return (
 		<Container fluid>
 			<Row>
-				<Col>
+				<Col lg={{ span: 6, offset: 4 }}>
 					<p>Select PDF for text extraction</p>
-				</Col>
-				<Col>
-					<input type="file" onChange={handleChange} />
+					<input type="file" className="btn btn-success" onChange={handleChange} accept="application/pdf" />
 				</Col>
 			</Row>
 			<Row>
 				<Col>
-					<h3>Extracted text</h3>
-					<div className="text-box">{text}</div>
+					{text && (
+						<>
+							<h3>Extracted text</h3>
+							<div className="text-box">{text}</div>
+						</>
+					)}
 				</Col>
 			</Row>
 		</Container>
 	);
 }
-export default Idea3;
+export default PDFToText;

@@ -6,16 +6,18 @@ import Translator_selector from "./Translatator_selector";
 import { useState, useRef } from "react";
 import Button from "react-bootstrap/Button";
 import Tesseract from "tesseract.js";
-function Idea2() {
+function ImageToText() {
 	const [imagePath, setImagePath] = useState("");
 	const [text, setText] = useState("");
-
+	const [enableButton, setEnableButton] = useState(false);
 	//handle change of image selected
 	const handleChange = (event) => {
 		setImagePath(URL.createObjectURL(event.target.files[0]));
+		setEnableButton(true);
 	};
 	//handle click on button to recognize text
 	const handleClick = () => {
+		setEnableButton(false);
 		Tesseract.recognize(imagePath, "eng", {
 			logger: (m) => console.log(m),
 		})
@@ -39,26 +41,28 @@ function Idea2() {
 	return (
 		<Container fluid>
 			<Row>
-				<Col>
-					<input type="file" onChange={handleChange} />
+				<Col lg={{ span: 3, offset: 4 }}>
+					<input type="file" onChange={handleChange} accept="image/jpeg,image/gif,image/png,image/x-eps" />
 				</Col>
-				<Col>
-					<Button onClick={handleClick}>Convert to text</Button>
-				</Col>
+				<Col>{enableButton && <Button onClick={handleClick}>Convert to text</Button>}</Col>
 			</Row>
 			<Row>
-				<Col>
-					<h3>Extracted text</h3>
-					<div className="text-box">{text}</div>
+				<Col lg={{ span: 3, offset: 2 }}>
+					{imagePath && (
+						<>
+							<h3>Actual Image uploaded</h3>
+							<img style={{ maxWidth: "600px" }} src={imagePath} alt="no imgage" />
+						</>
+					)}
 				</Col>
-			</Row>
-			<Row>
-				<Col>
-					<h3>Actual Image uploaded</h3>
-					<img style={{ maxWidth: "600px" }} src={imagePath} alt="no imgage" />
-				</Col>
+				{text && (
+					<Col lg={"auto"}>
+						<h3>Extracted text</h3>
+						<div className="text-box">{text}</div>
+					</Col>
+				)}
 			</Row>
 		</Container>
 	);
 }
-export default Idea2;
+export default ImageToText;
