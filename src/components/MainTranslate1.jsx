@@ -33,7 +33,10 @@ function MainTranslate1({ lang = "es" }) {
 			} else {
 				const url = `https://cors-anywhere.herokuapp.com/https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=es&dt=t&q=hello`;
 				fetch(url)
-					.then((response) => response.json())
+					.then((response) => {
+						console.log("RESPONSE:", respose);
+						response.json();
+					})
 					.then((data) => console.log("DATA en fetch::", data))
 					.catch((error) => console.error("ERROR EN FETCH::", error));
 
