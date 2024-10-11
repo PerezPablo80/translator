@@ -7,8 +7,10 @@ import { useState } from "react";
 import Button from "react-bootstrap/Button";
 
 function MainTranslate1({ lang = "es" }) {
+	const size = 47;
 	const [lng, setLang] = useState("es");
 	const [text, setText] = useState(false);
+	const [counter, setCounter] = useState(0);
 	const [translation, setTranslation] = useState(false);
 	function procesarTraductor() {
 		let d = document.getElementById("textAreaSource").value;
@@ -16,63 +18,31 @@ function MainTranslate1({ lang = "es" }) {
 		traducir(d, lng);
 	}
 	async function traducir(text, to) {
-		// console.log("will go to translate with:");
-		// console.log(`Text::${text}:: and to::${to}::`);
 		try {
-			if (text.length > 5000) {
-				const chunks = [];
-				while (text.length) chunks.push(text.splice(0, 5000).join(""));
-				Promise.all(chunks.map((chunk) => translate(chunk, { to: to })))
-					.then((values) => {
-						console.log("values.join:", values.text.join(""));
-						setTranslation(values.text.join(""));
-					})
-					.catch((e) => {
-						console.log("Exception promising all:", e);
-					});
-			} else {
-				fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${to}&dt=t&q=${text}`)
-					.then(async (response) => {
-						let j = await response.json();
-						// console.log("j::", j);
-						// console.log("j[0][0][0]::", j[0][0][0]);
-						setTranslation(j[0][0][0]);
-					})
-					.catch((e) => {
-						console.log("ERrroorrrr:", e);
-					});
-
-				//1
-				// fetch(`/api/translate?text=${text}&to=${to}&from=en`)
-				// 	.then((response) => {
-				// 		if (response) {
-				// 			console.log("response:", response);
-				// 			response.json();
-				// 		} else {
-				// 			console.log("no response:", response);
-				// 		}
-				// 	})
-				// 	.then((data) => {
-				// 		if (data) {
-				// 			console.log("DATA:", data), setTranslation(data.text);
-				// 		} else {
-				// 			console.log("no data:", data);
-				// 		}
-				// 	})
-				// 	.catch((e) => console.log("error on fetch:", e));
-				// 	//2
-				// translate(text, { to: to })
-				// 	.then((value) => {
-				// 		console.log("txt::", value.text);
-				// 		setTranslation(value.text);
-				// 	})
-				// 	.catch((e) => {
-				// 		console.log("Error on single Translate:", e);
-				// 	});
+			if (text.split(" ").length > size) {
+				let arr = text.split(" ");
+				text = "";
+				for (let i = 0; i < size; i++) {
+					text = text + arr[i] + " ";
+				}
 			}
+			console.log("text::", text);
+			fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${to}&dt=t&q=${text}`)
+				.then(async (response) => {
+					let j = await response.json();
+					setTranslation(j[0][0][0]);
+				})
+				.catch((e) => {
+					console.log("ERrroorrrr:", e);
+				});
 		} catch (e) {
 			console.log("error::", e);
 		}
+	}
+	function updateWordCount() {
+		let txt = document.getElementById("textAreaSource").value;
+		let count = txt.split(" ").length;
+		setCounter(size - count);
 	}
 	let placeholder =
 		lang == "es"
@@ -89,19 +59,24 @@ function MainTranslate1({ lang = "es" }) {
 			<Row>
 				<Col lg={{ span: 4, offset: 1 }}>
 					<label>{max_text}</label>
+					<br />
+					<span id="wordCount">{counter}</span>
 					<Form.Control
 						id="textAreaSource"
 						name="textAreaSource"
 						as="textarea"
 						placeholder={placeholder}
 						rows={8}
-						maxLength={5000}
+						onChange={() => {
+							updateWordCount();
+						}}
+						// maxLength={5000}
 					/>
 				</Col>
-				<Col>
+				<Col lg={{ span: 1 }}>
 					<Translator_selector setLang={setLang} lang={lang} />
 				</Col>
-				<Col>
+				<Col lg={{ span: 1 }}>
 					<Button
 						id="btnProcesar"
 						onClick={() => {
@@ -111,7 +86,11 @@ function MainTranslate1({ lang = "es" }) {
 						{btn_text}
 					</Button>
 				</Col>
-				<Col>{translation && <div>{translation}</div>}</Col>
+				<Col>
+					{translation && (
+						<div style={{ backgroundColor: "gray", borderRadius: 3, padding: 10 }}>{translation}</div>
+					)}
+				</Col>
 			</Row>
 			<Row></Row>
 		</Container>
