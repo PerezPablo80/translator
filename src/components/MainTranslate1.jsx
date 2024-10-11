@@ -16,8 +16,8 @@ function MainTranslate1({ lang = "es" }) {
 		traducir(d, lng);
 	}
 	async function traducir(text, to) {
-		console.log("will go to translate with:");
-		console.log(`Text::${text}:: and to::${to}::`);
+		// console.log("will go to translate with:");
+		// console.log(`Text::${text}:: and to::${to}::`);
 		try {
 			if (text.length > 5000) {
 				const chunks = [];
@@ -34,8 +34,9 @@ function MainTranslate1({ lang = "es" }) {
 				fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${to}&dt=t&q=${text}`)
 					.then(async (response) => {
 						let j = await response.json();
-						console.log("j::", j);
-						console.log("j[0][0][0]::", j[0][0][0]);
+						// console.log("j::", j);
+						// console.log("j[0][0][0]::", j[0][0][0]);
+						setTranslation(j[0][0][0]);
 					})
 					.catch((e) => {
 						console.log("ERrroorrrr:", e);
@@ -79,17 +80,22 @@ function MainTranslate1({ lang = "es" }) {
 			: import.meta.env.VITE_MAIN_TRANSLATE_PLACEHOLDER_BTN_EN;
 	let btn_text =
 		lang == "es" ? import.meta.env.VITE_MAIN_TRANSLATE_BTN_ES : import.meta.env.VITE_MAIN_TRANSLATE_BTN_EN;
-
+	let max_text =
+		lang == "es"
+			? import.meta.env.VITE_MAIN_TRANSLATE_MAX_TEXT_ES
+			: import.meta.env.VITE_MAIN_TRANSLATE_MAX_TEXT_EN;
 	return (
 		<Container fluid>
 			<Row>
 				<Col lg={{ span: 4, offset: 1 }}>
+					<label>{max_text}</label>
 					<Form.Control
 						id="textAreaSource"
 						name="textAreaSource"
 						as="textarea"
 						placeholder={placeholder}
 						rows={8}
+						maxLength={5000}
 					/>
 				</Col>
 				<Col>
